@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>..\c_lagLib</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -357,7 +357,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>..\c_lagLib</IncludePath>
             </VariousControls>
           </Aads>
           <LDads>
@@ -387,6 +387,26 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>tem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\tem.c</FilePath>
+            </File>
+            <File>
+              <FileName>tem.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\tem.h</FilePath>
+            </File>
+            <File>
+              <FileName>co2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\co2.c</FilePath>
+            </File>
+            <File>
+              <FileName>co2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\co2.h</FilePath>
             </File>
           </Files>
         </Group>
