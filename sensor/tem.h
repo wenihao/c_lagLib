@@ -11,8 +11,16 @@
 #ifndef TEM_H 
 #define TEM_H 
 
+#define CEL_MIN_VALUE (5.0f)
+#define CEL_MAX_VALUE (55.0f)
+#define CEL_TO_FAH(t) ((t)* 1.8f +32)
+
+#define MAX(a,b) ((a > b) ? (a) : (b))
+#define MIN(a,b) ((a < b) ? (a) : (b))
+
 float GetRawData(void);
 float GetcelTem(void);
+float GetFahrenheit(void);
 
 #ifdef __cplusplus
 extern "C"{

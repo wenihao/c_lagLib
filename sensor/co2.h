@@ -7,10 +7,20 @@
  * @copyright   xxxx技有限公司
  * *****************************************************************************
  */
-#include <stdint.h>
+#include "sensor_common.h"
+
 #ifndef CO2_H 
 #define CO2_H 
-uint32_t GetRawDataCo2(void);
+
+#define CO2_EXCELLENT (100U)
+#define CO2_GOOD (200U)
+#define CO2_AVERAGE (300U)
+
+QualityLevel GetCo2Level1(void);
+void DisplayCo2Level(QualityLevel lv);
+static UInt16 GetRawDataCo2(void);
+QualityLevel GetCo2Level(void);
+
 #ifdef __cplusplus
 extern "C"{
 #endif

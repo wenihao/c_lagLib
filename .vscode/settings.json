@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "tem.h": "c"
+        "tem.h": "c",
+        "pm25.h": "c",
+        "sensor_common.h": "c"
     }
 }

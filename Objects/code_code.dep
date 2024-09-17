@@ -1,22 +1,0 @@
-Dependencies for Project 'code', Target 'code': (DO NOT MODIFY !)
-CompilerVersion: 5060960::V5.06 update 7 (build 960)::ARMCC
-F (.\main.c)(0x65AFF28E)(--c99 -c --cpu Cortex-M4 --li -g -O0 --apcs=interwork --split_sections-I.\RTE\_code-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include-D__UVISION_VERSION="533" -D_RTE_ -DARMCM4 -D_RTE_-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
-I (D:\MDK5\ARM\ARMCC\include\stdio.h)(0x5E8E2EB2)
-I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include\ARMCM4.h)(0x5E8306CE)
-I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\core_cm4.h)(0x5E8ED122)
-I (D:\MDK5\ARM\ARMCC\include\stdint.h)(0x5E8E2EB2)
-I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\cmsis_version.h)(0x5E8ED122)
-I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5E8306C2)
-I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5E8ED122)
-I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\mpu_armv7.h)(0x5E8ED122)
-I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include\system_ARMCM4.h)(0x5E8ED12C)
-F (RTE\Device\ARMCM4\startup_ARMCM4.s)(0x5E8ED12C)(--cpu Cortex-M4 --li -g --apcs=interwork -I.\RTE\_code-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include--pd "__UVISION_VERSION SETA 533" --pd "_RTE_ SETA 1" --pd "ARMCM4 SETA 1" --pd "_RTE_ SETA 1"--list .\listings\startup_armcm4.lst --xref -o .\objects\startup_armcm4.o --depend .\objects\startup_armcm4.d)
-F (RTE\Device\ARMCM4\system_ARMCM4.c)(0x5E8ED12C)(--c99 -c --cpu Cortex-M4 --li -g -O0 --apcs=interwork --split_sections-I.\RTE\_code-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include-D__UVISION_VERSION="533" -D_RTE_ -DARMCM4 -D_RTE_-o .\objects\system_armcm4.o --omf_browse .\objects\system_armcm4.crf --depend .\objects\system_armcm4.d)
-I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include\ARMCM4.h)(0x5E8306CE)
-I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\core_cm4.h)(0x5E8ED122)
-I (D:\MDK5\ARM\ARMCC\include\stdint.h)(0x5E8E2EB2)
-I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\cmsis_version.h)(0x5E8ED122)
-I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5E8306C2)
-I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5E8ED122)
-I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\mpu_armv7.h)(0x5E8ED122)
-I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include\system_ARMCM4.h)(0x5E8ED12C)

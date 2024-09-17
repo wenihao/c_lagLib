@@ -339,7 +339,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\c_lagLib</IncludePath>
+              <IncludePath>..\c_lagLib;.\sensor;.\BaseConfig</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -388,25 +388,35 @@
               <FileType>1</FileType>
               <FilePath>.\main.c</FilePath>
             </File>
-            <File>
-              <FileName>tem.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\tem.c</FilePath>
-            </File>
-            <File>
-              <FileName>tem.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>.\tem.h</FilePath>
-            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>sensor</GroupName>
+          <Files>
             <File>
               <FileName>co2.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\co2.c</FilePath>
+              <FilePath>.\sensor\co2.c</FilePath>
             </File>
             <File>
-              <FileName>co2.h</FileName>
+              <FileName>pm25.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sensor\pm25.c</FilePath>
+            </File>
+            <File>
+              <FileName>tem.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sensor\tem.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>BaseConfig</GroupName>
+          <Files>
+            <File>
+              <FileName>base_config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\co2.h</FilePath>
+              <FilePath>.\BaseConfig\base_config.h</FilePath>
             </File>
           </Files>
         </Group>
