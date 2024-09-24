@@ -2,6 +2,8 @@
     "files.associations": {
         "tem.h": "c",
         "pm25.h": "c",
-        "sensor_common.h": "c"
+        "sensor_common.h": "c",
+        "co2.h": "c",
+        "temp_humi.h": "c"
     }
 }

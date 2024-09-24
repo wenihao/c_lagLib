@@ -404,9 +404,9 @@
               <FilePath>.\sensor\pm25.c</FilePath>
             </File>
             <File>
-              <FileName>tem.c</FileName>
+              <FileName>temp_humi.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\sensor\tem.c</FilePath>
+              <FilePath>.\sensor\temp_humi.c</FilePath>
             </File>
           </Files>
         </Group>

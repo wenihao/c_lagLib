@@ -27,8 +27,8 @@ static UInt16 GetRawDataCo2(void)
  */
 QualityLevel GetCo2Level1(void)
 {
-    UInt16 l_raw_ui16;
-    UInt16 level_ui16;
+    volatile UInt16 l_raw_ui16;
+    volatile UInt16 level_ui16;
     l_raw_ui16 = GetRawDataCo2();
     level_ui16 = l_raw_ui16 / 100;
     return (QualityLevel)level_ui16;

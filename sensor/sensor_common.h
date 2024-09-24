@@ -11,8 +11,21 @@
 #ifndef SENSOR_COMMON_H 
 #define SENSOR_COMMON_H 
 
-#include "base_config.h"
+#include "BaseConfig/base_config.h"
 #include <stdio.h>
+#include "temp_humi.h"
+
+#define MAX(a,b) ((a > b) ? (a) : (b))
+#define MIN(a,b) ((a < b) ? (a) : (b))
+#define EXCH(x, y)  \
+    do              \
+    {               \
+        UInt16 tmp; \
+        tmp = (x);  \
+        (x) = (y);  \
+        (y) = tmp;  \
+    } while (0)
+
 typedef enum
 {
     Excellent,
@@ -48,6 +61,22 @@ enum Month
     DEC,
     max
 };
+
+typedef struct
+{
+    char name[12];
+    UInt8 id;
+    char sex[10];
+    UInt8 age;
+    float score;
+} Studentinfo;
+
+typedef struct
+{
+    TempHumiSensor tempHumiData[TEMP_SENSOR_NUM];
+    QualityLevel co2Level;
+    QualityLevel pm25Level;
+}AirQuality;
 #ifdef __cplusplus
 extern "C"{
 #endif

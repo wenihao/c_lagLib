@@ -41,8 +41,8 @@ static UInt16 GetRawDataPm25(void)
  */
 QualityLevel GetPm25Level(void)
 {
-    UInt16 l_raw_ui16;
-    QualityLevel level_ui16;
+    volatile UInt16 l_raw_ui16;
+    volatile QualityLevel level_ui16;
     l_raw_ui16 = GetRawDataPm25();
     // level_ui16 = l_raw_ui16 / 10;
     if(l_raw_ui16 < PM25_EXCELLENT)
