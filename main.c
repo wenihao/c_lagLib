@@ -16,7 +16,8 @@
 #include "sensor/co2.h"
 #include "sensor/pm25.h"
 #include "sensor/sensor_common.h"
-
+#include "sensor/wifi.h"
+#include <stdlib.h>
 #define WORK_BOOK 0
 #if 1
 // #define APB2_BUS_BASE ((UInt32)0x40010000U)  
@@ -65,43 +66,193 @@ void _sys_exit(int return_code)
 }
 #endif
 
-float g_temCof_flt;
 float GetTemCofHmi(void)
 {
   return 1.2f;
 }
-
-float GetHmiDataTem(void)
+void ParaseCfgParam(CfgParam *cfgParam)
 {
-  return g_temCof_flt;
+  if(cfgParam->paramType == 1) // 温度传感器校准系数
+  {
+    float *tempCof = (float *)cfgParam->value;
+    printf("*tempCof = %f",*tempCof);
+    SetTemCof(*tempCof);
+  }
 }
-
-void DisPlayAirQuality(AirQuality airQuaLity)
-{
-    for(UInt8 i = 0 ; i < TEMP_SENSOR_NUM; i++)
-    {
-        airQuaLity.tempHumiData[i].temp = GetcelTem(airQuaLity.tempHumiData[i].id);
-        airQuaLity.tempHumiData[i].humi = GetHumiData(airQuaLity.tempHumiData[i].id);
-    }
-    DisplayPm25Level(airQuaLity.pm25Level);
-    DisplayCo2Level(airQuaLity.co2Level);
-}
-
-typedef __packed struct
+typedef struct
 {
     uint8_t id;
     uint8_t humi;
     float temp;
 } TempHumiSensor1;
 
+void Version(void)
+{
+  const char version[] = {"SF_20240930_0.01"};
+  printf("SF_Version:%s\r\n",version);
+}
+SInt32 Sum(SInt32 a, SInt32 b)
+{
+    return a + b;
+}
+void Handle(SInt32 (*pSum)(SInt32 a, SInt32 b))
+{
+    SInt32 sum = (*pSum)(1,2);
+    printf("sum = %d\r\n",sum);
+}
+typedef SInt32 (*PFUNC)(SInt32 a, SInt32 b);
+void g_Handle(PFUNC psum)
+{
+    SInt32 sum = (*psum)(3,4);
+    printf("sum = %d\r\n",sum);
+}
+#define testAddr (*(UInt32 *)0x20000400)
+
+char *strcpyTest(char dest[],char src[])
+{
+    UInt32 index = 0;
+    while(src[index] != '\0')
+    {
+        dest[index] = src[index];
+        index++;
+    }
+    dest[index] = '\0';
+    return dest;
+}
+
+typedef struct TempHumiListNode_t
+{
+    UInt8 id;
+    UInt8 humi;
+    float temp;
+    struct TempHumiListNode_t *next;
+}TempHumiListNode;
+
+/**
+ * @brief       初始化传感器及返回头节点的地址
+ * 
+ * @return      TempHumiListNode* 
+ */
+TempHumiListNode *InitSensorList(void)
+{
+    TempHumiListNode *header = (TempHumiListNode *)malloc(sizeof(TempHumiListNode));
+    if(header == NULL)
+    {
+        return NULL;
+    }
+    header->id = 0;
+    header->next = NULL;
+    return header;
+}
+
+/**
+ * @brief       寻找传感器
+ * 
+ * @return      TempHumiListNode* 
+ */
+TempHumiListNode *FindTempHumiSensor(void)
+{
+    TempHumiListNode *note = (TempHumiListNode *)malloc(sizeof(TempHumiListNode));
+    if(note == NULL)
+    {
+        return NULL;
+    }
+    static UInt8 l_SensorId_ui8 = 100;
+    note->id = l_SensorId_ui8;
+    l_SensorId_ui8--;
+    note->temp = 20.5f;
+    note->humi = 40;
+    return note;
+}
+
+void AddSensorNode(TempHumiListNode *header, TempHumiListNode *node)
+{
+    #if 0
+    TempHumiListNode *current = header;
+    while(current->next != NULL)
+    {
+        current = current->next;
+    }
+    current->next = node;
+    node->next = NULL;
+    #else
+    TempHumiListNode *prev = header;
+    TempHumiListNode *current = header->next;
+    while(current != NULL)
+    {
+        prev = current;
+        current = current->next;
+    }
+    prev->next = node;
+    node->next = NULL;
+    #endif
+}
+
+void PrintSensorData(TempHumiListNode *header)
+{
+    TempHumiListNode *current;
+    current = header->next;
+    while(current != NULL)
+    {
+        printf("Sensor id:%d,temp = %.1f,humi = %d.\r\n",
+                current->id,current->temp,current->humi);
+        current = current->next;
+    }
+}
+
+void DelSensorNode(TempHumiListNode *header,UInt8 id)
+{
+    TempHumiListNode *prev = header;
+    TempHumiListNode *current = header->next;
+    while(current != NULL)
+    {
+        if(current->id == id)
+        {
+            break;
+        }
+        prev = current;
+        current = current->next;
+    }
+    if(current == NULL)
+    {
+        printf("Can not find sensor.\r\n");
+    }
+    prev->next = current->next;
+    free(current);
+    current = NULL;
+}
+static TempHumiListNode *g_hander;
 int main(void)
 {
-    volatile Boolean l_flag = TRUE;
-    volatile UInt32 l_c = 0XF0F0F0F0;
-    volatile UInt32 *l_b = NULL;
-    l_b = &l_c;
-    //printf("sizeof(l_b) = %d,sizeof(l_c) = %d\r\n",sizeof(l_b),sizeof(l_c));
-    //volatile UInt32 l_d = 0xf0f0f0f0;
+    g_hander = InitSensorList();
+    if(g_hander == NULL)
+    {
+        return -1;
+    }
+    TempHumiListNode *node;
+    for(UInt8 i = 0; i < 3; i++)
+    {
+        node = FindTempHumiSensor();
+        if(node == NULL)
+        {
+            continue;
+        }
+        AddSensorNode(g_hander,node);
+    }
+    PrintSensorData(g_hander);
+    DelSensorNode(g_hander,100);
+    DelSensorNode(g_hander,98);
+    PrintSensorData(g_hander);
+    for (UInt8 i = 0; i < 3; i++)
+    {
+        node = FindTempHumiSensor();
+        if (node == NULL)
+        {
+            continue;
+        }
+        AddSensorNode(g_hander, node);
+    }
+    PrintSensorData(g_hander);
 #if WORK_BOOK
     // 第五章，多个鞋码对应的脚长,
     const float SCALE  = 0.3333f;
@@ -113,64 +264,126 @@ int main(void)
         shoe++;
     }
 #else
-    float l_celTem_flt;
-    float l_celTem1_flt = 0.0f;
-    UInt16 x = 9, y = 10;
-    UInt8 l_byte_ui8 = 0;
-    l_byte_ui8 = sizeof(TempHumiSensor1);
-    volatile Studentinfo stuInfo;
-    volatile QualityLevel l_qualityLevel_eum;
-    volatile QualityLevel l_GetPm25Level1_eum;
-    AirQuality airQuaLity;
-    airQuaLity.tempHumiData[0].id = 0x1234;
-    airQuaLity.tempHumiData[1].id = 0x2345;
-    airQuaLity.tempHumiData[2].id = 0x3456;
-    if(x < y)
+    /*值传递：函数传什么值就是什么值，而函数内部的数据不被修改，通过外部的值来赋予形参真实的数据。
+    地址传递：函数传什么地址的数据不影响内部数据的输出，还是取内部数据，外部数据不影响内部数据的计算。*/
+    #if 0
+    testAddr = 0x12345678;
+    testAddr++;
+    UInt32 l_a = 0x1413061D;
+    volatile UInt8 *l_b;
+    l_b = (UInt8*)&l_a;
+    UInt8 day = *l_b;
+    printf("l_b = %#X.\n",day);
+    l_b++;
+    UInt8 month = *l_b;
+    printf("l_b1 = %#X.\n",month);
+    l_b++;
+    UInt8 year_low = *l_b;
+    printf("l_b2 = %#X.\n",year_low);
+    l_b++;
+    UInt8 year_high = *l_b;
+    printf("l_b3 = %#X.\n",year_high);
+    printf("testAddr = 0x%#x.\n",testAddr);
+    float tempData = 1.0f;
+    UInt8 humiData = 5;
+    UInt32 sensorId12 = 0x1234;
+    GetTempHumi(&sensorId12,&tempData,&humiData);
+    printf("Sensor = %#x,tempData = %0.1f,humiData = %d\r\n", 
+            sensorId12, tempData, humiData);
+    #endif
+    #if 0
+    TempHumiSensor1 tempHumiData;
+    TempHumiSensor1 *tempHumiPtr;
+    tempHumiPtr = &tempHumiData;
+    tempHumiPtr->temp = 20.5f;
+    (*tempHumiPtr).temp = 21.5f;
+    printf("&tempHumiData = 0x%p,&tempHumiPtr = 0x%p\r\n", 
+            &tempHumiData, &tempHumiPtr);
+    printf("&tempHumiData.temp = 0x%p,&tempHumiPtr->temp = 0x%p\r\n", 
+            &tempHumiData.temp, &tempHumiPtr->temp);
+    #endif
+    char *src = "malloc for m failed.";
+    char dest[sizeof(*src)];
+    strcpyTest(dest,src);
+    printf("dest = %s,src = %d\n",dest,sizeof(*src));
+    AirQuality airQualdata;
+    AirQuality *airQualdata1; 
+    printf("sizeof(airQualdata) = %d,sizeof(*airQualdata1) = %d\r\n",sizeof(airQualdata),sizeof(airQualdata1));
+//    TempHumiSensor tempHumiData;
+    airQualdata.tempHumiData.id = 0x1234;
+    GetTempHumi(&airQualdata.tempHumiData);
+    airQualdata.co2Level = GetCo2Level();
+    airQualdata.pm25Level = GetPm25Level();
+    printf("ID = %d,temp = %0.1f,humi = %d\r\n",
+            airQualdata.tempHumiData.id,airQualdata.tempHumiData.temp,airQualdata.tempHumiData.humi);
+    UInt8 l_buffer[5] = {3,2,1,5,4};
+    // float l_buffer1[5] = {3,2,1,5,4};
+    float getTem_flt = 0;
+    //float l_data_flt = CalRawAvg(l_buffer1,5);
+    getTem_flt = GetcelTem(airQualdata.tempHumiData.id);
+    printf("getTem_flt = %.1f\r\n",getTem_flt);
+//    printf("l_data_flt = %.1f\r\n",l_data_flt);
+    printf("&l_buffer = %p\r\n",l_buffer);
+    for(UInt8 i = 0; i < 5; i++)
     {
-      EXCH(x,y);
-      printf("x = %d,y = %d\r\n",x,y);
+        printf("&l_buffer[%d] = %p,l_buffer[%d] = %d\r\n",i,&l_buffer[i],i,l_buffer[i]);
     }
-    else
+    for(UInt8 i = 0; i < 5; i++)
     {
-      printf("x is not smaller than y.\r\n");
+        printf("l_buffer[%d] = %d\r\n",i,*(l_buffer +i));
     }
-    //g_temCof_flt = GetTemCofHmi();
-    UInt8 l_sensorId = 3;
-    SetTemCof(GetTemCofHmi());
-    l_celTem_flt = GetcelTem(l_sensorId);
-    l_celTem1_flt = GetFahrenheit(l_sensorId);
-    airQuaLity.co2Level = GetCo2Level1();
-    airQuaLity.pm25Level = GetPm25Level();
-    DisPlayAirQuality(airQuaLity);
-    printf("Current CO2 Quality Level: %d\n", airQuaLity.co2Level);
-    printf("Current PM25 Quality Level: %d\n", airQuaLity.pm25Level);
-    printf("l_celTem1_flt is %.1f cel degrees.\n", l_celTem1_flt);
-    printf("l_celTem_flt is %.1f cel degrees.\n", l_celTem_flt);
-    UInt32 tmp[5] = {1,2,3,4,5};
-    printf("&tmp = %p,sizeof(tmp) = %d\n",tmp,sizeof(tmp));
-    for (uint8_t i = 0; i < 5; i++)
+    UInt8 *l_ptr;
+    l_ptr = l_buffer;
+    printf("l_ptr = %p\r\n",l_ptr);
+    for(UInt8 j = 0; j < 5; j++)
     {
-        printf("&tmp[%d] = %p,sizeof(tmp) = %d\n",i,&tmp[i],sizeof(tmp));
+        printf("j = %d,&l_ptr = %p,l_ptr = %d\r\n",j,(l_ptr + j),(*(l_ptr + j)));
     }
-    volatile UInt8 l_buff[] = {2,5,1,3,4,7};
-    volatile UInt8 l_n_ui8 = 0;
-    l_n_ui8 = sizeof(l_buff) / 2;
-    for(UInt32 i = 0 ; i < 6;i++)
+    for(UInt8 k = 0; k < 5; k++)
     {
-        l_n_ui8 +=l_buff[i];
+        printf("k = %d,&l_ptr = %p,l_ptr = %d\r\n",k,(&l_ptr[k]),l_ptr[k]);
     }
-
-    volatile int32_t sum;
-    volatile uint8_t l_x = 100, l_y = 200;
-    volatile int32_t nums[4];
-    for (uint8_t i = 0; i < 4; i++) 
-    {
-      nums[i] = i;
-    }
-    sum = l_x + l_y;
-    printf("sum = %d.\n", sum);
-
-    
+    float f = 1.2f;
+    UInt8 *p;
+    p = (UInt8 *)&f;
+    printf("*p = %#x.\n",*p);
+    p++;
+    printf("*p = %#x.\n",*p);
+    p++;
+    printf("*p = %#x.\n",*p);
+    p++;
+    printf("*p = %#x.\n",*p);
+    UInt8 value[4] = {0x9A,0x99,0x99,0x3F};
+    float *sum;
+    sum = (float *)value;
+    printf("*sum = %f\n",*sum);
+    // pSum = Sum;
+    // printf("pSum = 0x%p,Sum = 0x%p\r\n",pSum,Sum);
+    // SInt32 sum1 = (*pSum)(1, 2);
+    // printf("sum = %d\r\n",sum1);
+    Handle(Sum);
+    g_Handle(Sum);
+    CreatWifiCb(ParaseCfgParam);
+    WifiHandler();
+    UInt32 *l_p = (UInt32 *)malloc(4);
+    l_p[0] = 0x12345678;
+    free(l_p);
+    CfgParam CfgParam1;
+    printf("sizeof(CfgParam1) = %d\r\n",sizeof(CfgParam1));
+    printf("&pramType = 0x%p,&value = 0x%p,&size = 0x%p\r\n", &CfgParam1.paramType,
+           &CfgParam1.value, &CfgParam1.size);
+    CfgParam1.value = (UInt8 *)malloc(5);
+    CfgParam1.value[0] = 0x01;
+    CfgParam1.value[1] = 0x02;
+    CfgParam1.value[2] = 0x03;
+    CfgParam1.value[3] = 0x04;
+    CfgParam1.value[4] = 0x05;
+    char fmt[] = "malloc for m failed!\r\n";
+    printf("strlen = %d\r\n",strlen(fmt));
+    fmt[0] = 'M';
+    printf("fmt[0] = %c,fmt[1] = %c,fmt[2] = %c\r\n",
+    fmt[0],fmt[1],fmt[2]);
+    Version();
 #endif
     return 0;
 }

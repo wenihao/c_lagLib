@@ -1,26 +1,26 @@
 /**
  * *****************************************************************************
- * @file        co2.h
+ * @file        wifi.h
  * @brief       
  * @author      wenbo.zhang (1992552138@qq.com)
- * @date        2024-09-17
+ * @date        2024-09-29
  * @copyright   xxxx技有限公司
  * *****************************************************************************
  */
+#ifndef WIFI_H 
+#define WIFI_H 
 
-#ifndef CO2_H 
-#define CO2_H 
 #include "sensor_common.h"
+typedef struct
+{
+    UInt8 paramType;
+    UInt8 *value;
+    UInt32 size;
+}CfgParam;
 
-#define CO2_EXCELLENT (100U)
-#define CO2_GOOD (200U)
-#define CO2_AVERAGE (300U)
-
-QualityLevel GetCo2Level1(void);
-void DisplayCo2Level(QualityLevel lv);
-static UInt16 GetRawDataCo2(void);
-QualityLevel GetCo2Level(void);
-
+typedef void(*CbFunc)(CfgParam *CfgParam);
+void CreatWifiCb(CbFunc cbFunc);
+void WifiHandler(void);
 #ifdef __cplusplus
 extern "C"{
 #endif
@@ -43,4 +43,4 @@ extern "C"{
 }
 #endif
 
-#endif	/* CO2_H */
+#endif	/* WIFI_H */

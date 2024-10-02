@@ -1,0 +1,60 @@
+Dependencies for Project 'code', Target 'code': (DO NOT MODIFY !)
+CompilerVersion: 5060960::V5.06 update 7 (build 960)::ARMCC
+F (.\main.c)(0x66FD70A2)(--c99 -c --cpu Cortex-M4 --li -g -O0 --apcs=interwork --split_sections -I ..\c_lagLib -I .\sensor -I .\BaseConfig-I.\RTE\_code-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include-D__UVISION_VERSION="533" -D_RTE_ -DARMCM4 -D_RTE_-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (D:\MDK5\ARM\ARMCC\include\stdio.h)(0x5E8E2EB2)
+I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include\ARMCM4.h)(0x5E8306CE)
+I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\core_cm4.h)(0x66E8215B)
+I (D:\MDK5\ARM\ARMCC\include\stdint.h)(0x5E8E2EB2)
+I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\cmsis_version.h)(0x5E8ED122)
+I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5E8306C2)
+I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5E8ED122)
+I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\mpu_armv7.h)(0x5E8ED122)
+I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include\system_ARMCM4.h)(0x5E8ED12C)
+I (D:\MDK5\ARM\ARMCC\include\string.h)(0x5E8E2EB2)
+I (D:\MDK5\ARM\ARMCC\include\stdbool.h)(0x5E8E2EB2)
+I (sensor/temp_humi.h)(0x66F8F784)
+I (sensor/sensor_common.h)(0x66F8F750)
+I (..\c_lagLib\BaseConfig/base_config.h)(0x66F8F3A4)
+I (sensor/co2.h)(0x66F8F592)
+I (sensor/pm25.h)(0x66EA209A)
+I (sensor/wifi.h)(0x66F92757)
+I (D:\MDK5\ARM\ARMCC\include\stdlib.h)(0x5E8E2EB2)
+F (.\sensor\co2.c)(0x66EAE89B)(--c99 -c --cpu Cortex-M4 --li -g -O0 --apcs=interwork --split_sections -I ..\c_lagLib -I .\sensor -I .\BaseConfig-I.\RTE\_code-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include-D__UVISION_VERSION="533" -D_RTE_ -DARMCM4 -D_RTE_-o .\objects\co2.o --omf_browse .\objects\co2.crf --depend .\objects\co2.d)
+I (sensor\co2.h)(0x66F8F592)
+I (sensor\sensor_common.h)(0x66F8F750)
+I (..\c_lagLib\BaseConfig/base_config.h)(0x66F8F3A4)
+I (D:\MDK5\ARM\ARMCC\include\stdio.h)(0x5E8E2EB2)
+I (D:\MDK5\ARM\ARMCC\include\stdint.h)(0x5E8E2EB2)
+I (sensor\temp_humi.h)(0x66F8F784)
+F (.\sensor\pm25.c)(0x66F42439)(--c99 -c --cpu Cortex-M4 --li -g -O0 --apcs=interwork --split_sections -I ..\c_lagLib -I .\sensor -I .\BaseConfig-I.\RTE\_code-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include-D__UVISION_VERSION="533" -D_RTE_ -DARMCM4 -D_RTE_-o .\objects\pm25.o --omf_browse .\objects\pm25.crf --depend .\objects\pm25.d)
+I (sensor\pm25.h)(0x66EA209A)
+I (sensor\sensor_common.h)(0x66F8F750)
+I (..\c_lagLib\BaseConfig/base_config.h)(0x66F8F3A4)
+I (D:\MDK5\ARM\ARMCC\include\stdio.h)(0x5E8E2EB2)
+I (D:\MDK5\ARM\ARMCC\include\stdint.h)(0x5E8E2EB2)
+I (sensor\temp_humi.h)(0x66F8F784)
+F (.\sensor\temp_humi.c)(0x66FD187C)(--c99 -c --cpu Cortex-M4 --li -g -O0 --apcs=interwork --split_sections -I ..\c_lagLib -I .\sensor -I .\BaseConfig-I.\RTE\_code-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include-D__UVISION_VERSION="533" -D_RTE_ -DARMCM4 -D_RTE_-o .\objects\temp_humi.o --omf_browse .\objects\temp_humi.crf --depend .\objects\temp_humi.d)
+I (sensor\temp_humi.h)(0x66F8F784)
+I (sensor\sensor_common.h)(0x66F8F750)
+I (..\c_lagLib\BaseConfig/base_config.h)(0x66F8F3A4)
+I (D:\MDK5\ARM\ARMCC\include\stdio.h)(0x5E8E2EB2)
+I (D:\MDK5\ARM\ARMCC\include\stdint.h)(0x5E8E2EB2)
+F (.\sensor\wifi.c)(0x66F92B35)(--c99 -c --cpu Cortex-M4 --li -g -O0 --apcs=interwork --split_sections -I ..\c_lagLib -I .\sensor -I .\BaseConfig-I.\RTE\_code-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include-D__UVISION_VERSION="533" -D_RTE_ -DARMCM4 -D_RTE_-o .\objects\wifi.o --omf_browse .\objects\wifi.crf --depend .\objects\wifi.d)
+I (sensor\wifi.h)(0x66F92757)
+I (sensor\sensor_common.h)(0x66F8F750)
+I (..\c_lagLib\BaseConfig/base_config.h)(0x66F8F3A4)
+I (D:\MDK5\ARM\ARMCC\include\stdio.h)(0x5E8E2EB2)
+I (D:\MDK5\ARM\ARMCC\include\stdint.h)(0x5E8E2EB2)
+I (sensor\temp_humi.h)(0x66F8F784)
+I (D:\MDK5\ARM\ARMCC\include\stdlib.h)(0x5E8E2EB2)
+F (.\BaseConfig\base_config.h)(0x66F8F3A4)()
+F (RTE\Device\ARMCM4\startup_ARMCM4.s)(0x5E8ED12C)(--cpu Cortex-M4 --li -g --apcs=interwork -I ..\c_lagLib-I.\RTE\_code-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include--pd "__UVISION_VERSION SETA 533" --pd "_RTE_ SETA 1" --pd "ARMCM4 SETA 1" --pd "_RTE_ SETA 1"--list .\listings\startup_armcm4.lst --xref -o .\objects\startup_armcm4.o --depend .\objects\startup_armcm4.d)
+F (RTE\Device\ARMCM4\system_ARMCM4.c)(0x66F1967C)(--c99 -c --cpu Cortex-M4 --li -g -O0 --apcs=interwork --split_sections -I ..\c_lagLib -I .\sensor -I .\BaseConfig-I.\RTE\_code-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include-D__UVISION_VERSION="533" -D_RTE_ -DARMCM4 -D_RTE_-o .\objects\system_armcm4.o --omf_browse .\objects\system_armcm4.crf --depend .\objects\system_armcm4.d)
+I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include\ARMCM4.h)(0x5E8306CE)
+I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\core_cm4.h)(0x66E8215B)
+I (D:\MDK5\ARM\ARMCC\include\stdint.h)(0x5E8E2EB2)
+I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\cmsis_version.h)(0x5E8ED122)
+I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5E8306C2)
+I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5E8ED122)
+I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\mpu_armv7.h)(0x5E8ED122)
+I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include\system_ARMCM4.h)(0x5E8ED12C)

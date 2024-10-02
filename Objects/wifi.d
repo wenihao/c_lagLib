@@ -1,0 +1,9 @@
+.\objects\wifi.o: sensor\wifi.c
+.\objects\wifi.o: sensor\wifi.h
+.\objects\wifi.o: sensor\sensor_common.h
+.\objects\wifi.o: ..\c_lagLib\BaseConfig/base_config.h
+.\objects\wifi.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\wifi.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\wifi.o: sensor\temp_humi.h
+.\objects\wifi.o: sensor\sensor_common.h
+.\objects\wifi.o: D:\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h

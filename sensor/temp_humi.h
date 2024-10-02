@@ -7,7 +7,6 @@
  * @copyright   xxxx技有限公司
  * *****************************************************************************
  */
-
 #include "sensor_common.h"
 #ifndef TEM_HUMI_H 
 #define TEM_HUMI_H 
@@ -26,13 +25,14 @@ typedef struct
     UInt8 humi;
 }TempHumiSensor;
 
+static float CalRawAvg(float data[],UInt32 len);
 static float GetRawData(UInt32 sensorId);
 float GetcelTem(UInt32 sensorId);
 float GetFahrenheit(UInt32 sensorId);
 float GetHmiDataTem(void);
 void SetTemCof(float temCof);
 UInt8 GetHumiData(UInt32 sensorId);
-SInt8 GetTempHumi(UInt32 sensorId, float *temp, UInt8 *humi);
+SInt8 GetTempHumi(TempHumiSensor *tempHumPtr);
 #ifdef __cplusplus
 extern "C"{
 #endif

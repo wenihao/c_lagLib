@@ -10,10 +10,27 @@
 
 #include "temp_humi.h"
 
-static float g_temCof;
+static float g_temCof = 1;
 void SetTemCof(float temCof)
 {
     g_temCof = temCof;
+}
+
+/**
+ * @brief       求平均值
+ * 
+ * @param       data 
+ * @param       len 
+ * @return      float 
+ */
+static float CalRawAvg(float data[],UInt32 len)
+{
+    float l_res = 0;
+    for(UInt8 i = 0 ; i < len; i++)
+    {
+        l_res += data[i];
+    }
+    return l_res / len;
 }
 
 /**
@@ -36,24 +53,16 @@ static float GetRawData(UInt32 sensorId)
  */
 float GetcelTem(UInt32 sensorId)
 {
-    #if 0
-    volatile float l_cel_flt;
-    volatile float l_num_flt[5] = {0};
-    volatile float sum = 0.0f;
-    volatile float average;
+    #if 1
+    float l_cel_flt;
+    float l_num_flt[5] = {0};
 
     for(UInt8 i = 0; i < 5; i++)
     {
-        l_num_flt[i] = GetRawData();
+        l_num_flt[i] = GetRawData(sensorId);
 
     }
-    for(UInt8 i = 0; i < 5; i++)
-    {
-        l_cel_flt +=l_num_flt[i];
-
-    }
-    l_cel_flt = l_cel_flt / 5.0f;
-    l_cel_flt *= g_temCof;
+    l_cel_flt = CalRawAvg(l_num_flt,5);
     if(l_cel_flt < CEL_MIN_VALUE)
     {
         l_cel_flt = CEL_MIN_VALUE;
@@ -103,12 +112,13 @@ UInt8 GetHumiData(UInt32 sensorId)
  * @param[out]  humi 
  * @return      Boolean 0：成功，-1：失败
  */
-SInt8 GetTempHumi(UInt32 sensorId, float *temp, UInt8 *humi)
+SInt8 GetTempHumi(TempHumiSensor *tempHumPtr)
 {
-    if (temp != NULL && humi != NULL)
+    if (tempHumPtr != NULL)
     {
-        *temp = GetcelTem(sensorId);
-        *humi = GetHumiData(sensorId);
+        //tempHumPtr->id = 0x1234;
+        tempHumPtr->temp = GetcelTem(tempHumPtr->id);
+        tempHumPtr->humi = GetHumiData(tempHumPtr->id);
         return 0;
     }
     else

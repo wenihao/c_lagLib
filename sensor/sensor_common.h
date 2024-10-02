@@ -13,6 +13,7 @@
 
 #include "BaseConfig/base_config.h"
 #include <stdio.h>
+#include <stdint.h>
 #include "temp_humi.h"
 
 #define MAX(a,b) ((a > b) ? (a) : (b))
@@ -73,10 +74,11 @@ typedef struct
 
 typedef struct
 {
-    TempHumiSensor tempHumiData[TEMP_SENSOR_NUM];
+    TempHumiSensor tempHumiData;
     QualityLevel co2Level;
     QualityLevel pm25Level;
 }AirQuality;
+
 #ifdef __cplusplus
 extern "C"{
 #endif

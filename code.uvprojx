@@ -408,6 +408,11 @@
               <FileType>1</FileType>
               <FilePath>.\sensor\temp_humi.c</FilePath>
             </File>
+            <File>
+              <FileName>wifi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sensor\wifi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -419,6 +424,9 @@
               <FilePath>.\BaseConfig\base_config.h</FilePath>
             </File>
           </Files>
+        </Group>
+        <Group>
+          <GroupName>New Group</GroupName>
         </Group>
         <Group>
           <GroupName>::CMSIS</GroupName>
