@@ -41,5 +41,4 @@ void WifiHandler(void)
     cfgParam->value = NULL;
     free(cfgParam);
     cfgParam = NULL;
-    char 
 }

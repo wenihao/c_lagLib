@@ -126,6 +126,7 @@ typedef struct TempHumiListNode_t
     UInt8 humi;
     float temp;
     struct TempHumiListNode_t *next;
+    struct TempHumiListNode_t *prev;
 }TempHumiListNode;
 
 /**
@@ -141,7 +142,8 @@ TempHumiListNode *InitSensorList(void)
         return NULL;
     }
     header->id = 0;
-    header->next = NULL;
+    header->next = header;
+    header->prev = header;
     return header;
 }
 
@@ -221,38 +223,253 @@ void DelSensorNode(TempHumiListNode *header,UInt8 id)
     free(current);
     current = NULL;
 }
+
+void AddNode(TempHumiListNode *oldNote, TempHumiListNode *newNote)
+{
+    newNote->next = oldNote->next;
+    newNote->prev = oldNote;
+    oldNote->next->prev = newNote;
+    oldNote->next = newNote;
+}
+
+void AddNoteToHead(TempHumiListNode *header, TempHumiListNode *node)
+{
+    AddNode(header,node);
+}
+
+void AddNoteToTail(TempHumiListNode *header, TempHumiListNode *node)
+{
+    AddNode(header->prev,node);
+}
+
+void PrintSensorDataDouble(TempHumiListNode *header)
+{
+    TempHumiListNode *current;
+    current = header->next;
+    printf("\n*****printf list began*****!\n");
+    if(current == header)
+    {
+        printf("List has no node!\r\n");
+        return;
+    }
+    while(current != header)
+    {
+        printf("SensorDouble id:%d,temp = %.1f,humi = %d.\r\n",
+                current->id,current->temp,current->humi);
+        current = current->next;
+    }
+    printf("\n*****printf list end*****!\n");
+}
+
+void DelDataDouble(TempHumiListNode *node)
+{
+    node->prev->next = node->next;
+    node->next->prev = node->prev;
+}
+
+void DelSensorNodeDouble(TempHumiListNode *header, UInt8 id)
+{
+    TempHumiListNode *current;
+    current = header->next;
+    while(current != header)
+    {
+        if(current->id == id)
+        {
+            break;
+        }
+        current = current->next;
+    }
+    if(current == header)
+    {
+        printf("Can not find sensor %d.\n",id);
+    }
+    DelDataDouble(current);
+    free(current);
+    current = NULL;
+}
+
+/**
+ * @brief       通用链表结构体
+ * 
+ */
+typedef struct List
+{
+    struct List *prev;
+    struct List *next;
+}List;
+
+/**
+ * @brief       初始化通用链表
+ * 
+ * @param       header ：通用链表头节点
+ */
+void InitList(List *header)
+{
+    header->prev = header;
+    header->next = header;
+}
+
+/**
+ * @brief       将节点添加到已有节点的后面
+ * 
+ * @param       oldNote :已有节点
+ * @param       newNote :待添加节点
+ */
+void AddNote(List *oldNote, List *newNote)
+{
+    newNote->next = oldNote->next;
+    newNote->prev = oldNote;
+    oldNote->next->prev = newNote;
+    oldNote->next = newNote;
+}
+
+/**
+ * @brief       将节点添加到链表尾部
+ * 
+ * @param       header ：头节点
+ * @param       note ：待添加节点
+ */
+void AddNoteToTailGeneral(List *header, List *note)
+{
+    AddNote(header->prev,note);
+}
+
+/**
+ * @brief       将节点添加到头节点的后面
+ * 
+ * @param       header ：头节点
+ * @param       note ：待添加节点
+ */
+void AddNodeTohead(List *header, List *note)
+{
+    AddNote(header,note);
+}
+
+static List *g_tempHumiHeader;
+
+typedef struct TempHumiSensorGeneral
+{
+    UInt8 id;
+    UInt8 humi;
+    float temp;
+    List list;
+}TempHumiSensorGeneral;
+
+/**
+ * @brief       初始化
+ * 
+ * @return      true 
+ * @return      false 
+ */
+bool InitTempHumiSensor(void)
+{
+    g_tempHumiHeader = (List *)malloc(sizeof(List));
+    if(g_tempHumiHeader == NULL)
+    {
+        return FALSE;
+    }
+    InitList(g_tempHumiHeader);
+    return TRUE;
+}
 static TempHumiListNode *g_hander;
+
+/**
+ * @brief       寻找传感器
+ * 
+ * @return      TempHumiSensorGeneral* 
+ */
+TempHumiSensorGeneral *FindTempHumiSensorGeneral(void)
+{
+    TempHumiSensorGeneral *sensor = (TempHumiSensorGeneral *)(malloc(sizeof(TempHumiSensorGeneral)));
+    if(sensor == NULL)
+    {
+        return NULL;
+    }
+    static UInt8 id = 100;
+    sensor->id = id;
+    id--;
+    sensor->humi = 40;
+    sensor->temp = 20.5f;
+    return sensor;
+}
+
+/**
+ * @brief       添加传感器，如温湿度传感器或者CO2传感器，如果用到CO2传感器只需要更新1个类似函数即可
+ * 
+ * @param       sensor 
+ */
+void AddTempHumiSensor(TempHumiSensorGeneral *sensor)
+{
+    AddNoteToTailGeneral(g_tempHumiHeader,&sensor->list);
+}
+
+
 int main(void)
 {
+    if(!InitTempHumiSensor())
+    {
+        return -1;
+    }
+    TempHumiSensorGeneral *l_sensor;
+    for(UInt8 i = 0; i < 3; i++)
+    {
+        l_sensor = FindTempHumiSensorGeneral();
+        if(l_sensor == NULL)
+        {
+            continue;
+        }
+        AddTempHumiSensor(l_sensor);
+    }
     g_hander = InitSensorList();
     if(g_hander == NULL)
     {
         return -1;
     }
-    TempHumiListNode *node;
+     TempHumiListNode *node;
+    // for(UInt8 i = 0; i < 3; i++)
+    // {
+    //     node = FindTempHumiSensor();
+    //     if(node == NULL)
+    //     {
+    //         continue;
+    //     }
+    //     AddSensorNode(g_hander,node);
+    // }
+    // PrintSensorData(g_hander);
+    // DelSensorNode(g_hander,100);
+    // DelSensorNode(g_hander,98);
+    // PrintSensorData(g_hander);
+    // for (UInt8 i = 0; i < 3; i++)
+    // {
+    //     node = FindTempHumiSensor();
+    //     if (node == NULL)
+    //     {
+    //         continue;
+    //     }
+    //     AddSensorNode(g_hander, node);
+    // }
+    // PrintSensorData(g_hander);
     for(UInt8 i = 0; i < 3; i++)
-    {
-        node = FindTempHumiSensor();
-        if(node == NULL)
-        {
-            continue;
-        }
-        AddSensorNode(g_hander,node);
-    }
-    PrintSensorData(g_hander);
-    DelSensorNode(g_hander,100);
-    DelSensorNode(g_hander,98);
-    PrintSensorData(g_hander);
-    for (UInt8 i = 0; i < 3; i++)
     {
         node = FindTempHumiSensor();
         if (node == NULL)
         {
             continue;
         }
-        AddSensorNode(g_hander, node);
+        AddNoteToHead(g_hander,node);
     }
-    PrintSensorData(g_hander);
+    PrintSensorDataDouble(g_hander);
+
+    node = FindTempHumiSensor();
+    AddNoteToTail(g_hander,node);
+
+    node = FindTempHumiSensor();
+    AddNoteToHead(g_hander,node);
+    PrintSensorDataDouble(g_hander);
+    
+    DelSensorNodeDouble(g_hander,97);
+    DelSensorNodeDouble(g_hander,96);
+    PrintSensorDataDouble(g_hander);
 #if WORK_BOOK
     // 第五章，多个鞋码对应的脚长,
     const float SCALE  = 0.3333f;

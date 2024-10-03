@@ -1,6 +1,6 @@
 Dependencies for Project 'code', Target 'code': (DO NOT MODIFY !)
 CompilerVersion: 5060960::V5.06 update 7 (build 960)::ARMCC
-F (.\main.c)(0x66FD70A2)(--c99 -c --cpu Cortex-M4 --li -g -O0 --apcs=interwork --split_sections -I ..\c_lagLib -I .\sensor -I .\BaseConfig-I.\RTE\_code-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include-D__UVISION_VERSION="533" -D_RTE_ -DARMCM4 -D_RTE_-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (.\main.c)(0x66FEC4A9)(--c99 -c --cpu Cortex-M4 --li -g -O0 --apcs=interwork --split_sections -I ..\c_lagLib -I .\sensor -I .\BaseConfig-I.\RTE\_code-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include-D__UVISION_VERSION="533" -D_RTE_ -DARMCM4 -D_RTE_-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (D:\MDK5\ARM\ARMCC\include\stdio.h)(0x5E8E2EB2)
 I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include\ARMCM4.h)(0x5E8306CE)
 I (D:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include\core_cm4.h)(0x66E8215B)
@@ -39,7 +39,7 @@ I (sensor\sensor_common.h)(0x66F8F750)
 I (..\c_lagLib\BaseConfig/base_config.h)(0x66F8F3A4)
 I (D:\MDK5\ARM\ARMCC\include\stdio.h)(0x5E8E2EB2)
 I (D:\MDK5\ARM\ARMCC\include\stdint.h)(0x5E8E2EB2)
-F (.\sensor\wifi.c)(0x66F92B35)(--c99 -c --cpu Cortex-M4 --li -g -O0 --apcs=interwork --split_sections -I ..\c_lagLib -I .\sensor -I .\BaseConfig-I.\RTE\_code-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include-D__UVISION_VERSION="533" -D_RTE_ -DARMCM4 -D_RTE_-o .\objects\wifi.o --omf_browse .\objects\wifi.crf --depend .\objects\wifi.d)
+F (.\sensor\wifi.c)(0x66FD7314)(--c99 -c --cpu Cortex-M4 --li -g -O0 --apcs=interwork --split_sections -I ..\c_lagLib -I .\sensor -I .\BaseConfig-I.\RTE\_code-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include-ID:\MDK5\ARM\PACK\ARM\CMSIS\5.7.0\Device\ARM\ARMCM4\Include-D__UVISION_VERSION="533" -D_RTE_ -DARMCM4 -D_RTE_-o .\objects\wifi.o --omf_browse .\objects\wifi.crf --depend .\objects\wifi.d)
 I (sensor\wifi.h)(0x66F92757)
 I (sensor\sensor_common.h)(0x66F8F750)
 I (..\c_lagLib\BaseConfig/base_config.h)(0x66F8F3A4)
